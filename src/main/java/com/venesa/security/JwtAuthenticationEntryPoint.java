@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import com.venesa.component.BodyRequestComponent;
 import com.venesa.entity.LogEntity;
 import com.venesa.service.LogService;
 import com.venesa.utils.ConstantsUtil;
@@ -28,6 +29,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 
 	@Autowired
 	private LogService logService;
+	
+	@Autowired
+	private BodyRequestComponent bodyRequestComponent; 
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
@@ -39,8 +43,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 		if (remoteAddr == null || "".equals(remoteAddr)) {
 			remoteAddr = request.getRemoteAddr();
 		}
+		String bodyRequest = null;
+		if(request.getMethod().equals(ConstantsUtil.HTTP_POST) || request.getMethod().equals(ConstantsUtil.HTTP_PUT) ) {
+			bodyRequest = bodyRequestComponent.getBody(request);
+		}
 		try {
-//			String username = auth.getName() != null ? auth.getName() : "unknow";
 
 			log.info("Request method = {}, url = {}, user= {},  remoteAddr = {} ", request.getMethod(),
 					request.getRequestURL().toString(), username, remoteAddr);
@@ -53,13 +60,15 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 				logEntity.setTime(new Date());
 				logEntity.setMessage(authException.getMessage());
 				logEntity.setTypeErr(ConstantsUtil.UNAUTHORIZED);
+				logEntity.setUserAgent(request.getHeader("User-Agent"));
+				logEntity.setBody(bodyRequest);
 				logService.save(logEntity);
 			}
 		} catch (Exception e) {
 			log.info("=====errrr =======" + e.getMessage());
 		}
 		log.info("=====errrr =======" + authException.getMessage());
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ConstantsUtil.UNAUTHORIZED);
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ConstantsUtil.ERR_UNAUTHORIZED);
 	}
 
 }

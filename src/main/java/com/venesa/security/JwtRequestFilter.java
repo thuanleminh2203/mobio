@@ -69,6 +69,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				if(request.getMethod().equals(ConstantsUtil.HTTP_POST) || request.getMethod().equals(ConstantsUtil.HTTP_PUT) ) {
 					bodyRequest = bodyRequestComponent.getBody(request);
 				}
+//				System.out.println("======i'm hereeeee=====" + request.getHeader("User-Agent"));
 //				String body = bodyRequestComponent.getBody(request);
 //				log.info("=======body ======= body = {} " , body);
 //				request.get
@@ -81,6 +82,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 					logEntity.setTime(new Date());
 					logEntity.setTypeErr(ConstantsUtil.OK);
 					logEntity.setBody(bodyRequest);
+					logEntity.setUserAgent(request.getHeader("User-Agent"));
 					logService.save(logEntity);
 					
 				}

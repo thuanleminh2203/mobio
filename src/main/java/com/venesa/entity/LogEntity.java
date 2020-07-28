@@ -49,6 +49,9 @@ public class LogEntity {
 	
 	@Column
 	private String body;
+	
+	@Column(name = "user_agent")
+	private String userAgent;
 
 	@Column
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "UTC")

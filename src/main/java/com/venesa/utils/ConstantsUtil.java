@@ -9,4 +9,13 @@ public class ConstantsUtil {
 	public static final String HTTP_PUT = "PUT";
 	public static final String HTTP_GET = "GET";
 	public static final String HTTP_DELETE = "DELETE";
+	
+	
+	public static final String ERR_UNAUTHORIZED = "Token is invalid or is expired. Please login again.";
+	public static final String ERR_FORBIDDEM = "Access is denied.";
+	
+	
+	public static final String SUCCSESS = "success";
+	public static final String LOGGIN = "Tai khoan dang duoc dang nhap";
+	
 }
