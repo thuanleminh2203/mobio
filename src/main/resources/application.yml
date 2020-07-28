@@ -1,0 +1,51 @@
+server.port : 8763
+jwt:
+   secret: venesa
+   timetoken:  6000
+spring:
+  application:
+    name : zuul-server
+  datasource: 
+    url : jdbc:mysql://192.168.1.196:3306/venesa_gateway
+    username : gateway
+    password : Abcd@1234
+    platform : mysql
+    driver-class-name : com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql : false
+    hibernate: 
+      ddl-auto : none
+      naming:
+        physical-strategy : org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+eureka:
+   client:
+    service-url:
+      default-zone : http://localhost:8761/eureka
+
+
+zuul.routes:
+   gallery-service:
+     path : /gallery/**
+     service-id : gallery-service
+   auth-service:
+     path : /auth/**
+     service-id:  auth-service
+     sensitive-headers : Cookie,Set-Cookie
+#     strip-prefix: false
+
+hystrix:
+   command:
+      default:
+         execution:
+            iso lation:
+               thread:
+                  timeoutInMilliseconds: 30000
+
+
+ribbon:
+   ReadTimeout: 60000
+   connection-timeout: 3000
+   eureka:
+      enabled: true
+      
