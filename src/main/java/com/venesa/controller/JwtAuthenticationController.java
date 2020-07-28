@@ -22,15 +22,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.venesa.component.WapperResponseData;
 import com.venesa.dto.JwtResponse;
 import com.venesa.dto.ResponseData;
 import com.venesa.dto.UserDTO;
 import com.venesa.security.JwtTokenUtil;
 import com.venesa.service.JwtUserDetailsService;
+import com.venesa.utils.ConstantsUtil;
 
 @RestController
 @CrossOrigin
-//@RequestMapping(")
 public class JwtAuthenticationController {
 
 	@Autowired
@@ -47,6 +48,9 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationController.class);
+
+	@Autowired
+	private WapperResponseData wapperResponse;
 
 	@Value("${jwt.timetoken}")
 	private String jwt_token_validity;
@@ -67,17 +71,22 @@ public class JwtAuthenticationController {
 			final UserDetails userDetails = userDetailService.loadUserByUsername(rq.getUsername());
 			Date date = jwtUserDetailsService.getTimeToken(rq.getUsername());
 			if (date != null && date.after((new Date()))) {
-				responseEntity = new ResponseEntity<>(new ResponseData(null, "Tai khoan dang duoc dang nhap", null),
-						HttpStatus.BAD_REQUEST);
+				responseEntity = wapperResponse.error(
+						new ResponseData(HttpStatus.BAD_REQUEST, ConstantsUtil.LOGGIN, null), HttpStatus.BAD_REQUEST);
 			} else {
 				long timeToken = new Date().getTime() + Long.parseLong(jwt_token_validity) * 1000;
 				jwtUserDetailsService.updateTimeTokenByUsername(rq.getUsername(), new Date(timeToken));
 				final String token = jwtTokenUtil.generateToken(userDetails);
-				responseEntity = new ResponseEntity<>(
-						new ResponseData(null, "susscess", new JwtResponse(token)), HttpStatus.OK);
+//				responseEntity = new ResponseEntity<>(
+//						new ResponseData(null, "susscess", new JwtResponse(token)), HttpStatus.OK);
+				responseEntity = wapperResponse
+						.success(new ResponseData(HttpStatus.OK, ConstantsUtil.SUCCSESS, new JwtResponse(token)));
 			}
 		} catch (Exception e) {
-			responseEntity = new ResponseEntity<>(new ResponseData(null, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+//			responseEntity = new ResponseEntity<>(new ResponseData(null, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+			responseEntity = wapperResponse.error(
+					new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), null),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return responseEntity;
@@ -92,8 +101,7 @@ public class JwtAuthenticationController {
 				jwtUserDetailsService.updateTimeTokenByUsername(principal.getName(), null);
 				responseEntity = new ResponseEntity<>(new ResponseData(null, "susscess", null), HttpStatus.OK);
 			} else {
-				responseEntity = new ResponseEntity<>(new ResponseData(null, "err", null),
-						HttpStatus.BAD_REQUEST);
+				responseEntity = new ResponseEntity<>(new ResponseData(null, "err", null), HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {

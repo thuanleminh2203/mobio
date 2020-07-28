@@ -1,6 +1,6 @@
 package com.venesa.dto;
 
-import org.springframework.http.HttpStatus;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +9,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ResponseData {
-	private HttpStatus code;
+@AllArgsConstructor
+public class ErrorResponse {
+	private long timestamp;
+	private String status;
+	private String error;
 	private String message;
-	private Object data;
-
+	private String path;
 }

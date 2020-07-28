@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
+import com.venesa.component.BodyRequestComponent;
 import com.venesa.entity.LogEntity;
 import com.venesa.service.LogService;
 import com.venesa.utils.ConstantsUtil;
@@ -27,6 +28,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
 	@Autowired
 	private LogService logService;
+	
+	@Autowired
+	private BodyRequestComponent bodyRequestComponent; 
+
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
@@ -35,6 +40,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth != null ? auth.getName() : "unknow";
 		String remoteAddr = "";
+		String bodyRequest = null;
+		if(request.getMethod().equals(ConstantsUtil.HTTP_POST) || request.getMethod().equals(ConstantsUtil.HTTP_PUT) ) {
+			bodyRequest = bodyRequestComponent.getBody(request);
+		}
 		remoteAddr = request.getHeader("X-FORWARDED-FOR");
 		if (remoteAddr == null || "".equals(remoteAddr)) {
 			remoteAddr = request.getRemoteAddr();
@@ -52,13 +61,15 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 				logEntity.setTime(new Date());
 				logEntity.setMessage(accessDeniedException.getMessage());
 				logEntity.setTypeErr(ConstantsUtil.FORBIDDEN);
+				logEntity.setUserAgent(request.getHeader("User-Agent"));
+				logEntity.setBody(bodyRequest);
 				logService.save(logEntity);
 			}
 		} catch (Exception e) {
 			log.info("=====errrr =======" + e.getMessage());
 		}
 
-		response.sendError(HttpServletResponse.SC_FORBIDDEN, ConstantsUtil.FORBIDDEN);
+		response.sendError(HttpServletResponse.SC_FORBIDDEN, ConstantsUtil.ERR_FORBIDDEM);
 
 	}
 }
