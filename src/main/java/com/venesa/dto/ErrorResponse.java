@@ -12,9 +12,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorResponse {
-	private long timestamp;
+	private long timestamp = new Date().getTime();
 	private String status;
 	private String error;
 	private String message;
-	private String path;
+	public ErrorResponse(String status, String error, String message) {
+		this.status = status;
+		this.error = error;
+		this.message = message;
+	}
+	
+	
+//	private String path;
 }

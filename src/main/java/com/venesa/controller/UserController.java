@@ -1,5 +1,7 @@
 package com.venesa.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +28,12 @@ public class UserController {
 	private WapperResponseData wapperResponse;
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody UserDTO user){
+	public ResponseEntity<?> register(@RequestBody UserDTO user , HttpServletRequest request){
 		ResponseEntity<?> responseEntity;
 		try {
-//			User res = jwtUserDetailsService.save(user);
-//			responseEntity = new ResponseEntity<>(new ResponseData(null, "susscess", user), HttpStatus.OK);
-			
 			responseEntity = wapperResponse.success(new ResponseData(HttpStatus.OK, ConstantsUtil.SUCCSESS, jwtUserDetailsService.save(user)));
 		
 		} catch (Exception e) {
-//			responseEntity =  new ResponseEntity<>( new ResponseData(null,e.getMessage(),null), HttpStatus.BAD_REQUEST);
 			responseEntity = wapperResponse.error(new ResponseData(HttpStatus.BAD_REQUEST, e.getMessage(), null), HttpStatus.BAD_REQUEST);
 		}
 		return responseEntity;
