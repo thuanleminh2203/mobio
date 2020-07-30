@@ -31,10 +31,10 @@ public class UserController {
 	public ResponseEntity<?> register(@RequestBody UserDTO user , HttpServletRequest request){
 		ResponseEntity<?> responseEntity;
 		try {
-			responseEntity = wapperResponse.success(new ResponseData(HttpStatus.OK, ConstantsUtil.SUCCSESS, jwtUserDetailsService.save(user)));
+			responseEntity = wapperResponse.success(new ResponseData(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, jwtUserDetailsService.save(user)));
 		
 		} catch (Exception e) {
-			responseEntity = wapperResponse.error(new ResponseData(HttpStatus.BAD_REQUEST, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+			responseEntity = wapperResponse.error(new ResponseData(ConstantsUtil.ERROR, e.getMessage(), null), HttpStatus.BAD_REQUEST);
 		}
 		return responseEntity;
 	}
