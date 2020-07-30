@@ -13,8 +13,11 @@ public class ConstantsUtil {
 	public static final String ERR_UNAUTHORIZED = "Token is invalid or is expired. Please login again.";
 	public static final String ERR_FORBIDDEM = "Access is denied.";
 
-	public static final String SUCCSESS = "success";
+	public static final int SUCCSESS = 0;
+	public static final int ERROR = 1;
+	public static final String SUCCSESS_MESS = "Thành công";
 	public static final String LOGGIN = "Tai khoan dang duoc dang nhap";
+	public static final String ERR_BUSINESS = "err business";
 
 	public static final String REGEX_NUMBER_PHONE = "(0/91)?[7-9][0-9]{9}";
 

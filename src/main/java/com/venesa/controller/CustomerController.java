@@ -19,19 +19,19 @@ import com.venesa.utils.ConstantsUtil;
 @CrossOrigin
 @RequestMapping("/customer")
 public class CustomerController {
+	
 	@Autowired
 	private WapperResponseData wapperResponse;
 
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Customer customer, BindingResult result) {
 		customer.validate(customer, result);
-		ResponseEntity<?> responseEntity;
 		if (result.hasErrors()) {
-//			System.out.println("========" + result.getFieldError().getDefaultMessage());
-			return wapperResponse.error(new ResponseData(HttpStatus.BAD_REQUEST, result.getFieldError().getDefaultMessage(), null),
+			return wapperResponse.error(
+					new ResponseData(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
 					HttpStatus.BAD_REQUEST);
 		}
-		
+
 		return null;
 	}
 

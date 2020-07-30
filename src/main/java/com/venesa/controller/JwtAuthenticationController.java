@@ -72,20 +72,17 @@ public class JwtAuthenticationController {
 			Date date = jwtUserDetailsService.getTimeToken(rq.getUsername());
 			if (date != null && date.after((new Date()))) {
 				responseEntity = wapperResponse.error(
-						new ResponseData(HttpStatus.BAD_REQUEST, ConstantsUtil.LOGGIN, null), HttpStatus.BAD_REQUEST);
+						new ResponseData(ConstantsUtil.ERROR, ConstantsUtil.LOGGIN, null), HttpStatus.BAD_REQUEST);
 			} else {
 				long timeToken = new Date().getTime() + Long.parseLong(jwt_token_validity) * 1000;
 				jwtUserDetailsService.updateTimeTokenByUsername(rq.getUsername(), new Date(timeToken));
 				final String token = jwtTokenUtil.generateToken(userDetails);
-//				responseEntity = new ResponseEntity<>(
-//						new ResponseData(null, "susscess", new JwtResponse(token)), HttpStatus.OK);
 				responseEntity = wapperResponse
-						.success(new ResponseData(HttpStatus.OK, ConstantsUtil.SUCCSESS, new JwtResponse(token)));
+						.success(new ResponseData(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, new JwtResponse(token)));
 			}
 		} catch (Exception e) {
-//			responseEntity = new ResponseEntity<>(new ResponseData(null, e.getMessage(), null), HttpStatus.BAD_REQUEST);
 			responseEntity = wapperResponse.error(
-					new ResponseData(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), null),
+					new ResponseData(ConstantsUtil.ERROR, e.getMessage(), null),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
@@ -99,14 +96,14 @@ public class JwtAuthenticationController {
 			Date date = jwtUserDetailsService.getTimeToken(principal.getName());
 			if (date != null) {
 				jwtUserDetailsService.updateTimeTokenByUsername(principal.getName(), null);
-				responseEntity = new ResponseEntity<>(new ResponseData(null, "susscess", null), HttpStatus.OK);
+				responseEntity = new ResponseEntity<>(new ResponseData(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, null), HttpStatus.OK);
 			} else {
-				responseEntity = new ResponseEntity<>(new ResponseData(null, "err", null), HttpStatus.BAD_REQUEST);
+				responseEntity = new ResponseEntity<>(new ResponseData(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null), HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
 			log.info("===== err ==" + e.getMessage());
-			responseEntity = new ResponseEntity<>(new ResponseData(null, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+			responseEntity = new ResponseEntity<>(new ResponseData(ConstantsUtil.ERROR, e.getMessage(), null), HttpStatus.BAD_REQUEST);
 		}
 
 		return responseEntity;
