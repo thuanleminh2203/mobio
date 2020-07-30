@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.venesa.utils.ConstantsUtil;
 import com.venesa.utils.FieldDTOConstant;
 import com.venesa.utils.ValidatorUtils;
 
@@ -49,7 +50,7 @@ public class Customer implements Validator{
 
 		ValidatorUtils.checkNullOrEmpty(customer.getMobile(), errors, "mobile");
 		ValidatorUtils.checkLength(customer.getMobile(), errors, FieldDTOConstant.MAX_MOBILE, "mobile");
-		ValidatorUtils.checkPhoneNumber(customer.getMobile(), errors, "mobile");
+		ValidatorUtils.checkRegex(customer.getMobile(), errors, "mobile", ConstantsUtil.REGEX_NUMBER_PHONE);
 
 		ValidatorUtils.checkNullOrEmpty(customer.getIdCardNo(), errors, "idCardNo");
 		ValidatorUtils.checkLength(customer.getIdCardNo(), errors, FieldDTOConstant.MAX_MOBILE, "idCardNo");

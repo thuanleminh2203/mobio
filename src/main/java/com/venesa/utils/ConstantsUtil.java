@@ -19,6 +19,6 @@ public class ConstantsUtil {
 	public static final String LOGGIN = "Tai khoan dang duoc dang nhap";
 	public static final String ERR_BUSINESS = "err business";
 
-	public static final String REGEX_NUMBER_PHONE = "(0/91)?[7-9][0-9]{9}";
+	public static final String REGEX_NUMBER_PHONE = "^[0-9]{10}$";;
 
 }
