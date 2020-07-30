@@ -29,4 +29,10 @@ public class ValidatorUtils {
 			error.rejectValue(nameField, null, nameField + " is not format");
 	}
 
+	public static final void checkRegex(String data, Errors error, String nameField, String regex) {
+		if (!data.matches(regex)) {
+			error.rejectValue(nameField, null, nameField + " is not format");
+		}
+	}
+
 }
