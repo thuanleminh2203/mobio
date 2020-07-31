@@ -6,7 +6,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.venesa.utils.ConstantsUtil;
-import com.venesa.utils.FieldDTOConstant;
 import com.venesa.utils.ValidatorUtils;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Customer implements Validator{
 
 	private String mobileId;
@@ -43,20 +43,15 @@ public class Customer implements Validator{
 		Customer customer = (Customer) target;
 
 		ValidatorUtils.checkNullOrEmpty(customer.getMobileId(), errors, "mobileId");
-		ValidatorUtils.checkLength(customer.getMobileId(), errors, FieldDTOConstant.MAX_MOBILE_ID, "mobileId");
 
 		ValidatorUtils.checkNullOrEmpty(customer.getFullName(), errors, "fullName");
-		ValidatorUtils.checkLength(customer.getFullName(), errors, FieldDTOConstant.MAX_FULLNAME, "fullName");
 
 		ValidatorUtils.checkNullOrEmpty(customer.getMobile(), errors, "mobile");
-		ValidatorUtils.checkLength(customer.getMobile(), errors, FieldDTOConstant.MAX_MOBILE, "mobile");
 		ValidatorUtils.checkRegex(customer.getMobile(), errors, "mobile", ConstantsUtil.REGEX_NUMBER_PHONE);
 
 		ValidatorUtils.checkNullOrEmpty(customer.getIdCardNo(), errors, "idCardNo");
-		ValidatorUtils.checkLength(customer.getIdCardNo(), errors, FieldDTOConstant.MAX_MOBILE, "idCardNo");
 
 		ValidatorUtils.checkNullOrEmpty(customer.getGender().toString(), errors, "gender");
-		ValidatorUtils.checkLength(customer.getGender().toString(), errors, FieldDTOConstant.MAX_GENDER, "gender");
 		ValidatorUtils.checkGender(customer.getGender(), errors, "gender");
 
 	}

@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseData {
+public class ResponseData<T>{
 	private int errorCode;
 	private String errorMessage;
-	private Object data;
+	private T data;
 
 }
