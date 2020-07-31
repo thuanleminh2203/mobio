@@ -19,7 +19,19 @@ public class WebClientComponent {
 
 	@Autowired
 	private WebClient webClient;
-
+	/**
+	 * 
+	 * @param <T>
+	 * @param <V>
+	 * @param type
+	 * @param body
+	 * @param method
+	 * @param url
+	 * @param tClass
+	 * @param token
+	 * @return
+	 * @throws Exception
+	 */
 	public <T, V> T callInternalService(ParameterizedTypeReference<T> type, V body, HttpMethod method, String url,
 			Class<T> tClass, String token) throws Exception {
 		T dto = null;
