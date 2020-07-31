@@ -1,38 +1,49 @@
 package com.venesa.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.venesa.entity.User;
+import com.venesa.component.WapperResponseData;
+import com.venesa.component.WebClientComponent;
+import com.venesa.dto.Customer;
+import com.venesa.dto.ResponseData;
+import com.venesa.utils.ConstantsUtil;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/hello")
 public class HelloController {
-	
-	@ResponseBody 
+
+	@Autowired
+	private WapperResponseData wapperResponse;
+
+	@Autowired
+	private WebClientComponent webClient;
+
 	@PostMapping
-	public String hello(Authentication authentication, @RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
-//		try {
-			System.out.println("====bodyy===" );
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		System.out.println("=====authen===" + authentication.getName());
-//		System.out.println("=====authen===" + authentication.getPrincipal());
-//		HttpServletResponseCopier responseCopier = new HttpServletResponseCopier((HttpServletResponse) response);
-		return "hello";
+	public ResponseEntity<?> hello(Authentication authentication, @RequestBody Customer customer,
+			HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		try {
+			Customer res = webClient.callInternalService(new ParameterizedTypeReference<Customer>() {
+			}, customer, HttpMethod.GET, "http://localhost:8763/customer", Customer.class, token);
+			return wapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
+		} catch (Exception e) {
+			return wapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),
+					HttpStatus.BAD_REQUEST);
+		}
+
 	}
 }

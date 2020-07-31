@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import com.venesa.utils.ConstantsUtil;
 @CrossOrigin
 @RequestMapping("/customer")
 public class CustomerController {
-	
+
 	@Autowired
 	private WapperResponseData wapperResponse;
 
@@ -28,11 +29,28 @@ public class CustomerController {
 		customer.validate(customer, result);
 		if (result.hasErrors()) {
 			return wapperResponse.error(
-					new ResponseData(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
+					new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
 					HttpStatus.BAD_REQUEST);
 		}
 
-		return null;
+		return wapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, customer));
+	}
+	
+	
+	@GetMapping
+	public ResponseEntity<?> get() {
+//		customer.validate(customer, result);
+//		if (result.hasErrors()) {
+//			return wapperResponse.error(
+//					new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
+//					HttpStatus.BAD_REQUEST);
+//		}
+		Customer customer = new Customer();
+		customer.setFullName("hihihi");
+		customer.setGender(1);
+		customer.setIdCardNo("aaaaaaa");
+		customer.setMobile("098135273");
+		return wapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS,customer));
 	}
 
 }
