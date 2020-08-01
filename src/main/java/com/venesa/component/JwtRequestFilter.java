@@ -1,4 +1,4 @@
-package com.venesa.security;
+package com.venesa.component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +25,7 @@ import com.venesa.entity.LogEntity;
 import com.venesa.service.JwtUserDetailsService;
 import com.venesa.service.LogService;
 import com.venesa.utils.ConstantsUtil;
+import com.venesa.utils.JwtTokenUtil;
 
 //import com.eureka.zuul.service.JwtUserDetailsService;
 
@@ -88,22 +89,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
 		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(
 				(HttpServletResponse) response);
+		LogEntity logEntity = new LogEntity();
+		logEntity.setRequestTime(new Date());
 		filterChain.doFilter(requestWrapper, responseWrapper);
 		String requestBody = new String(requestWrapper.getContentAsByteArray());
 		String responseBody = new String(responseWrapper.getContentAsByteArray());
 		// Do not forget this line after reading response content or actual response
 		// will be empty!
 		try {
-			LogEntity logEntity = new LogEntity();
+//			LogEntity logEntity = new LogEntity();
 			logEntity.setMethod(request.getMethod());
 			logEntity.setUrl(request.getRequestURL().toString());
 			logEntity.setUsername(username != null ? username : "unknow");
 			logEntity.setRemoteAddr(remoteAddr);
-			logEntity.setTime(new Date());
+			logEntity.setResponseTime(new Date());
 			logEntity.setTypeErr(ConstantsUtil.OK);
 			logEntity.setUserAgent(request.getHeader("User-Agent"));
 			logEntity.setBody(requestBody);
 			logEntity.setResponseBody(responseBody);
+//			logEntity.setType(ConstantsUtil.CALL_API_TO_CRM);
 			logService.save(logEntity);
 		} catch (Exception e) {
 			log.info("=========errr=========== err = {} ", e.getMessage());

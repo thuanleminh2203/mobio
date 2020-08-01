@@ -2,9 +2,16 @@ server.port : 8763
 jwt:
    secret: venesa
    timetoken:  6000
+venesa:
+  rabbitmq:
+      exchange: exchange
+      queue: queue  
+      routingkey: routingkey
+
 spring:
   application:
     name : zuul-server
+  main:    allow-bean-definition-overriding: true
   datasource: 
     url : jdbc:mysql://192.168.1.196:3306/venesa_gateway
     username : gateway
@@ -17,6 +24,19 @@ spring:
       ddl-auto : none
       naming:
         physical-strategy : org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+#      listener:
+#        simple:
+#         retry:
+#           enabled: true
+#           initial-interval: 3s
+#           max-attempts: 6
+#           max-interval: 10s
+#           multiplier: 2
 
 eureka:
    client:
