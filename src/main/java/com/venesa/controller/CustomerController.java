@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.venesa.component.WapperResponseData;
 import com.venesa.dto.Customer;
 import com.venesa.dto.ResponseData;
+import com.venesa.service.RabbitMQSender;
 import com.venesa.utils.ConstantsUtil;
 
 @RestController
@@ -23,10 +24,15 @@ public class CustomerController {
 
 	@Autowired
 	private WapperResponseData wapperResponse;
+	
+	@Autowired
+	private RabbitMQSender sender;
 
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Customer customer, BindingResult result) {
 		customer.validate(customer, result);
+		sender.send(customer);
+		System.out.println("Message sent to the RabbitMQ Venesa Successfully");
 		if (result.hasErrors()) {
 			return wapperResponse.error(
 					new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),

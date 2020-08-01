@@ -1,4 +1,4 @@
-package com.venesa.security;
+package com.venesa.component;
 
 import java.io.IOException;
 import java.io.Serializable;

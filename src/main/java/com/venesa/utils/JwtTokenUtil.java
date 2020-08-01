@@ -1,4 +1,4 @@
-package com.venesa.security;
+package com.venesa.utils;
 
 import java.io.Serializable;
 import java.util.Date;

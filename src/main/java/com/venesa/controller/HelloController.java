@@ -38,7 +38,7 @@ public class HelloController {
 		String token = request.getHeader("Authorization");
 		try {
 			Customer res = webClient.callInternalService(new ParameterizedTypeReference<Customer>() {
-			}, customer, HttpMethod.GET, "http://localhost:8763/customer", Customer.class, token);
+			}, customer, HttpMethod.POST, "http://localhost:8763/customer", Customer.class, token);
 			return wapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
 		} catch (Exception e) {
 			return wapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),

@@ -26,13 +26,13 @@ public class LogEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Integer id;
+	@Column(name = "log_id")
+	private Long id;
 
 	@Column
 	private String username;
 
-	@Column
+	@Column(name="request_url")
 	private String url;
 
 	@Column
@@ -47,7 +47,7 @@ public class LogEntity {
 	@Column(name = "type_err")
 	private String typeErr;
 	
-	@Column
+	@Column(name = "request_body")
 	private String body;
 	
 	@Column(name = "user_agent")
@@ -56,9 +56,17 @@ public class LogEntity {
 	@Column(name = "response_body")
 	private String responseBody;
 
-	@Column
+	@Column(name= "request_time")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "UTC")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date time;
+	private Date requestTime;
+
+	@Column(name= "response_time")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "UTC")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date responseTime;
+
+	@Column(name = "type")
+	private int type = 1;
 
 }
