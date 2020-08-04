@@ -3,6 +3,7 @@ package com.venesa.serviceImpl;
 import com.venesa.entity.LogEntity;
 import com.venesa.repository.LogRepository;
 import com.venesa.service.LogService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,12 +26,19 @@ public class LogServiceImpl implements LogService {
     @Cacheable(cacheNames = { "longCache" })
     public List<LogEntity> getAll() {
         System.out.println("=====getAlll Log============");
+//        logRepository.findAll().stream().forEach(k -> {
+//            JSONObject jsonObject = new JSONObject(k.getResponseBody());
+//            System.out.println("===== jsonObject ====" + jsonObject.toString().replace("\"",""));
+//            String body = k.getResponseBody().replaceAll(".*\".*", "\\\"");
+//            System.out.println("======= body ====" + body);
+//        });
         return logRepository.findAll();
     }
 
     @Override
     @CacheEvict(value = "longCache" , allEntries = true)
     public void deleteById(long id) {
+        System.out.println("=====delete by id =======");
         logRepository.deleteById(id);
     }
 }
