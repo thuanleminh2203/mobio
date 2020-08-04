@@ -3,11 +3,15 @@ package com.venesa.request;
 import com.venesa.dto.Customer;
 import com.venesa.utils.ConstantsUtil;
 import com.venesa.utils.ValidatorUtils;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerRequest implements Validator {
     private String mobileId;
     private String mobile;
@@ -15,7 +19,7 @@ public class CustomerRequest implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Customer.class.equals(clazz);
+        return CustomerRequest.class.equals(clazz);
     }
 
     @Override

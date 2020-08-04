@@ -29,7 +29,7 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    @CacheEvict(value = "longCache")
+    @CacheEvict(value = "longCache" , allEntries = true)
     public void deleteById(long id) {
         logRepository.deleteById(id);
     }

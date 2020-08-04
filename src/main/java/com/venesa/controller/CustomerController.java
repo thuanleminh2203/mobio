@@ -1,18 +1,17 @@
 package com.venesa.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.venesa.component.WrapperResponseData;
+import com.venesa.dto.Customer;
+import com.venesa.dto.ResponseData;
 import com.venesa.request.CustomerRequest;
+import com.venesa.service.RabbitMQSender;
+import com.venesa.utils.ConstantsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import com.venesa.component.WrapperResponseData;
-import com.venesa.dto.Customer;
-import com.venesa.dto.ResponseData;
-import com.venesa.service.RabbitMQSender;
-import com.venesa.utils.ConstantsUtil;
 
 @RestController
 @CrossOrigin
