@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable();
 		// dont authenticate this particular request
 //		httpSecurity.authorizeRequests().antMatchers("/authenticate/**", "/register" , "/customer" ).hasIpAddress("0:0:0:0:0:0:0:1");
-		httpSecurity.authorizeRequests().antMatchers("/authenticate/**", "/register" , "/hello" ).permitAll();
+		httpSecurity.authorizeRequests().antMatchers("/authenticate/**", "/register" , "/hello" , "/log/**" ).permitAll();
 //		httpSecurity.authorizeRequests().antMatchers("/**").hasRole("ADMIN").and().authorizeRequests().
 
 		// all other requests need to be authenticated

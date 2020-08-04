@@ -1,59 +1,59 @@
 package com.venesa.dto;
 
-import java.util.Date;
-
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import com.venesa.utils.ConstantsUtil;
 import com.venesa.utils.ValidatorUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 //@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Customer implements Validator{
+public class Customer implements Validator {
 
-	private String mobileId;
+    private String mobileId;
 
-	private String fullName;
+    private String fullName;
 
-	private String mobile;
+    private String mobile;
 
-	private String idCardNo;
+    private String idCardNo;
 
-	private Integer gender;
+    private Integer gender;
 
-	private Date birthday;
+    private Date birthday;
 
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return Customer.class.equals(clazz);
-	}
+    private String email;
 
-	@Override
-	public void validate(Object target, Errors errors) {
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return Customer.class.equals(clazz);
+    }
 
-		Customer customer = (Customer) target;
+    @Override
+    public void validate(Object target, Errors errors) {
 
-		ValidatorUtils.checkNullOrEmpty(customer.getMobileId(), errors, "mobileId");
+        Customer customer = (Customer) target;
 
-		ValidatorUtils.checkNullOrEmpty(customer.getFullName(), errors, "fullName");
+        ValidatorUtils.checkNullOrEmpty(customer.getMobileId(), errors, "mobileId");
 
-		ValidatorUtils.checkNullOrEmpty(customer.getMobile(), errors, "mobile");
-		ValidatorUtils.checkRegex(customer.getMobile(), errors, "mobile", ConstantsUtil.REGEX_NUMBER_PHONE);
+        ValidatorUtils.checkNullOrEmpty(customer.getFullName(), errors, "fullName");
 
-		ValidatorUtils.checkNullOrEmpty(customer.getIdCardNo(), errors, "idCardNo");
+        ValidatorUtils.checkNullOrEmpty(customer.getMobile(), errors, "mobile");
+        ValidatorUtils.checkRegex(customer.getMobile(), errors, "mobile", ConstantsUtil.REGEX_NUMBER_PHONE);
 
-		ValidatorUtils.checkNullOrEmpty(customer.getGender().toString(), errors, "gender");
-		ValidatorUtils.checkGender(customer.getGender(), errors, "gender");
+        ValidatorUtils.checkNullOrEmpty(customer.getIdCardNo(), errors, "idCardNo");
 
-	}
+        ValidatorUtils.checkNullOrEmpty(customer.getGender().toString(), errors, "gender");
+        ValidatorUtils.checkGender(customer.getGender(), errors, "gender");
+
+    }
 
 }

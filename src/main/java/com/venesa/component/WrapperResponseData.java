@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WapperResponseData {
+public class WrapperResponseData {
 	
 	public <T> ResponseEntity<T> success(T body){
 		return new ResponseEntity<>(body, HttpStatus.OK);
