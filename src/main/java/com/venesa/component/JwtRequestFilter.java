@@ -99,6 +99,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			stringBuilder.append(s);
 		}
 		String responseBody = new String(responseWrapper.getContentAsByteArray());
+//		String[] responseSplit  = responseBody.split("[\\r\\n\\t\\s]+");
+//		StringBuilder responseBuilder = new StringBuilder();
+//		for (String s : responseSplit) {
+//			responseBuilder.append(s);
+//		}
 		// Do not forget this line after reading response content or actual response
 		// will be empty!
 		try {
