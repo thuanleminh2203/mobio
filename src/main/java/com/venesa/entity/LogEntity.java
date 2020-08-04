@@ -1,5 +1,6 @@
 package com.venesa.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LogEntity {
+public class LogEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +68,6 @@ public class LogEntity {
 	private Date responseTime;
 
 	@Column(name = "type")
-	private int type = 1;
+	private Integer type = 1;
 
 }

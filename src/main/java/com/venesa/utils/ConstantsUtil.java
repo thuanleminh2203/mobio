@@ -20,6 +20,7 @@ public class ConstantsUtil {
     public static final String ERR_BUSINESS = "err business";
 
     public static final String REGEX_NUMBER_PHONE = "^[0-9]{10}$";
+    public static final String REGEX_EMAIL = "^(.+)@(.+)$";
 
 
     public static final int CALL_API_TO_MOBIO = 2;

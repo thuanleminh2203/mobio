@@ -16,13 +16,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.venesa.component.WapperResponseData;
+import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.JwtResponse;
 import com.venesa.dto.ResponseData;
 import com.venesa.dto.UserDTO;
@@ -40,8 +39,8 @@ public class JwtAuthenticationController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	@Autowired
-	private UserDetailsService userDetailService;
+//	@Autowired
+//	private UserDetailsService userDetailService;
 
 	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
@@ -50,7 +49,7 @@ public class JwtAuthenticationController {
 	private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
 	@Autowired
-	private WapperResponseData wapperResponse;
+	private WrapperResponseData wapperResponse;
 
 	@Value("${jwt.timetoken}")
 	private String jwt_token_validity;
@@ -68,7 +67,7 @@ public class JwtAuthenticationController {
 			}
 		}
 		try {
-			final UserDetails userDetails = userDetailService.loadUserByUsername(rq.getUsername());
+			final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(rq.getUsername());
 			Date date = jwtUserDetailsService.getTimeToken(rq.getUsername());
 			if (date != null && date.after((new Date()))) {
 				responseEntity = wapperResponse.error(

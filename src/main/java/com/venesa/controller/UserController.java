@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.venesa.component.WapperResponseData;
+import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.ResponseData;
 import com.venesa.dto.UserDTO;
 import com.venesa.service.JwtUserDetailsService;
@@ -20,12 +20,12 @@ import com.venesa.utils.ConstantsUtil;
 @RestController
 @CrossOrigin
 public class UserController {
-	
+
 	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
-	
+
 	@Autowired
-	private WapperResponseData wapperResponse;
+	private WrapperResponseData wapperResponse;
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody UserDTO user , HttpServletRequest request){

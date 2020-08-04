@@ -93,11 +93,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		logEntity.setRequestTime(new Date());
 		filterChain.doFilter(requestWrapper, responseWrapper);
 		String requestBody = new String(requestWrapper.getContentAsByteArray());
+		String[] requestSplit  = requestBody.split("[\\r\\n\\t\\s]+");
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String s : requestSplit) {
+			stringBuilder.append(s);
+		}
 		String responseBody = new String(responseWrapper.getContentAsByteArray());
 		// Do not forget this line after reading response content or actual response
 		// will be empty!
 		try {
-//			LogEntity logEntity = new LogEntity();
 			logEntity.setMethod(request.getMethod());
 			logEntity.setUrl(request.getRequestURL().toString());
 			logEntity.setUsername(username != null ? username : "unknow");
@@ -105,9 +109,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			logEntity.setResponseTime(new Date());
 			logEntity.setTypeErr(ConstantsUtil.OK);
 			logEntity.setUserAgent(request.getHeader("User-Agent"));
-			logEntity.setBody(requestBody);
+			logEntity.setBody(stringBuilder.toString());
 			logEntity.setResponseBody(responseBody);
-//			logEntity.setType(ConstantsUtil.CALL_API_TO_CRM);
 			logService.save(logEntity);
 		} catch (Exception e) {
 			log.info("=========errr=========== err = {} ", e.getMessage());
