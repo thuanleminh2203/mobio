@@ -21,12 +21,16 @@ import com.venesa.repository.UserRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService{
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+
+	private final PasswordEncoder bcryptEncoder;
 
 	@Autowired
-	private PasswordEncoder bcryptEncoder;
-		
+	public JwtUserDetailsService(UserRepository userRepository, PasswordEncoder bcryptEncoder) {
+		this.userRepository = userRepository;
+		this.bcryptEncoder = bcryptEncoder;
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = getUserByUsername(username);
@@ -60,7 +64,7 @@ public class JwtUserDetailsService implements UserDetailsService{
 	}
 	
 	public void updateTimeTokenByUsername(String username , Date date) throws Exception {
-		Integer id = userRepository.updateTimeTokenByUsername(username, date);
+		int id = userRepository.updateTimeTokenByUsername(username, date);
 		if(id < 0) throw new Exception("loi j a");
 	}
 }	

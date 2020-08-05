@@ -14,10 +14,13 @@ import java.util.List;
 @Service
 public class LogServiceImpl implements LogService {
 
-    @Autowired
-    private LogRepository logRepository;
+    private final LogRepository logRepository;
 
-    @Override
+    @Autowired
+    public LogServiceImpl(LogRepository logRepository) {
+        this.logRepository = logRepository;
+    }
+
     public void save(LogEntity entity) {
         logRepository.save(entity);
     }

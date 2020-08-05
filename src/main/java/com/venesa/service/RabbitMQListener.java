@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.venesa.dto.Customer;
 
 @Service
-public class RabbitMQListner  {
+public class RabbitMQListener  {
 
 //	@Override
 	@RabbitListener(queues = "${venesa.rabbitmq.queue}")

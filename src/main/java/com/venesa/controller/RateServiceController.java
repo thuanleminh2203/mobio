@@ -1,7 +1,7 @@
 package com.venesa.controller;
 
-import com.venesa.component.WrapperResponseData;
 import com.venesa.component.WebClientComponent;
+import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.Customer;
 import com.venesa.dto.ResponseData;
 import com.venesa.utils.ConstantsUtil;
@@ -21,13 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
-public class RateServicerController {
+public class RateServiceController {
+
+    private final WrapperResponseData wrapperResponse;
+
+    private final WebClientComponent webClient;
 
     @Autowired
-    private WrapperResponseData wapperResponse;
-
-    @Autowired
-    private WebClientComponent webClient;
+    public RateServiceController(WrapperResponseData wrapperResponse, WebClientComponent webClient) {
+        this.wrapperResponse = wrapperResponse;
+        this.webClient = webClient;
+    }
 
     @PostMapping
     public ResponseEntity<?> hello(Authentication authentication, @RequestBody Customer customer,
@@ -36,9 +40,9 @@ public class RateServicerController {
         try {
             Customer res = webClient.callInternalService(new ParameterizedTypeReference<Customer>() {
             }, customer, HttpMethod.POST, "http://localhost:8763/customer", Customer.class, token);
-            return wapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
+            return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
         } catch (Exception e) {
-            return wapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),
+            return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),
                     HttpStatus.BAD_REQUEST);
         }
 

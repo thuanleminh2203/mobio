@@ -11,7 +11,8 @@ venesa:
 spring:
   application:
     name : zuul-server
-  main:    allow-bean-definition-overriding: true
+  main:
+    allow-bean-definition-overriding: true
   datasource: 
     url : jdbc:mysql://192.168.1.196:3306/venesa_gateway
     username : gateway
@@ -38,34 +39,34 @@ spring:
 #           max-interval: 10s
 #           multiplier: 2
 
-eureka:
-   client:
-    service-url:
-      default-zone : http://localhost:8761/eureka
-
-
-zuul.routes:
-   gallery-service:
-     path : /gallery/**
-     service-id : gallery-service
-   auth-service:
-     path : /auth/**
-     service-id:  auth-service
-     sensitive-headers : Cookie,Set-Cookie
-#     strip-prefix: false
-
-hystrix:
-   command:
-      default:
-         execution:
-            iso lation:
-               thread:
-                  timeoutInMilliseconds: 30000
-
-
-ribbon:
-   ReadTimeout: 60000
-   connection-timeout: 3000
-   eureka:
-      enabled: true
+#eureka:
+#   client:
+#    service-url:
+#      default-zone : http://localhost:8761/eureka
+#
+#
+#zuul.routes:
+#   gallery-service:
+#     path : /gallery/**
+#     service-id : gallery-service
+#   auth-service:
+#     path : /auth/**
+#     service-id:  auth-service
+#     sensitive-headers : Cookie,Set-Cookie
+##     strip-prefix: false
+#
+#hystrix:
+#   command:
+#      default:
+#         execution:
+#            iso lation:
+#               thread:
+#                  timeoutInMilliseconds: 30000
+#
+#
+#ribbon:
+#   ReadTimeout: 60000
+#   connection-timeout: 3000
+#   eureka:
+#      enabled: true
       

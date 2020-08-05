@@ -10,8 +10,7 @@ import com.venesa.dto.Customer;
 public class RabbitMQConsumer {
 	
 //	@RabbitListener(queues = "${venesa.rabbitmq.queue}")
-	public void recievedMessage(Message message) {
-		System.out.println("Recieved Message From RabbitMQ- " + new String(message.getBody()));
-//		System.out.println("Recieved Message From RabbitMQ: " + new String(message.getBody()));
+	public void receivedMessage(Message message) {
+		System.out.println("Received Message From RabbitMQ- " + new String(message.getBody()));
 	}
 }

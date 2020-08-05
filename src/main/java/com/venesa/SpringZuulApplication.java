@@ -25,4 +25,6 @@ public class SpringZuulApplication {
 	public WebClient getWebclient() {
 		return WebClient.create();
 	}
+
+
 }
