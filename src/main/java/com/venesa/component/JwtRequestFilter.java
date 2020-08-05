@@ -1,6 +1,5 @@
 package com.venesa.component;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Date;
 
@@ -34,18 +33,20 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-	private static Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
+
+	private final JwtUserDetailsService jwtUserDetailsService;
+
+	private final JwtTokenUtil jwtTokenUtil;
+
+	private final LogService logService;
 
 	@Autowired
-	private JwtUserDetailsService jwtUserDetailsService;
-
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
-
-	@Autowired
-	private LogService logService;
-
-	BufferedReader bufferedReader = null;
+	public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil, LogService logService) {
+		this.jwtUserDetailsService = jwtUserDetailsService;
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.logService = logService;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -71,9 +72,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			} catch (Exception e) {
 				System.out.println("=== err token === :" + e.getMessage());
 			}
-		} else {
-			logger.warn("JWT Token does not begin with Bearer String");
-		}
+		} else logger.warn("JWT Token does not begin with Bearer String");
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);

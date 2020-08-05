@@ -1,7 +1,7 @@
 package com.venesa.controller;
 
-import com.venesa.component.WrapperResponseData;
 import com.venesa.component.WebClientComponent;
+import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.RateServiceDTO;
 import com.venesa.dto.ResponseData;
 import com.venesa.utils.ConstantsUtil;
@@ -20,25 +20,28 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin
 @RequestMapping("/hello")
 public class HelloController {
+    private final WrapperResponseData wrapperResponse;
 
-	@Autowired
-	private WrapperResponseData wapperResponse;
+    private final WebClientComponent webClient;
 
-	@Autowired
-	private WebClientComponent webClient;
+    @Autowired
+    public HelloController(WrapperResponseData wrapperResponse, WebClientComponent webClient) {
+        this.wrapperResponse = wrapperResponse;
+        this.webClient = webClient;
+    }
 
-	@PostMapping
-	public ResponseEntity<?> hello(Authentication authentication, @RequestBody RateServiceDTO rq,
-								   HttpServletRequest request, HttpServletResponse response) {
-		String token = request.getHeader("Authorization");
-		try {
-			RateServiceDTO res = webClient.callInternalService(new ParameterizedTypeReference<RateServiceDTO>() {
-			}, rq, HttpMethod.POST, "http://localhost:8763/customer", RateServiceDTO.class, token);
-			return wapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
-		} catch (Exception e) {
-			return wapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),
-					HttpStatus.BAD_REQUEST);
-		}
+    @PostMapping
+    public ResponseEntity<?> hello(Authentication authentication, @RequestBody RateServiceDTO rq,
+                                   HttpServletRequest request, HttpServletResponse response) {
+        String token = request.getHeader("Authorization");
+        try {
+            RateServiceDTO res = webClient.callInternalService(new ParameterizedTypeReference<RateServiceDTO>() {
+            }, rq, HttpMethod.POST, "http://localhost:8763/customer", RateServiceDTO.class, token);
+            return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
+        } catch (Exception e) {
+            return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),
+                    HttpStatus.BAD_REQUEST);
+        }
 
-	}
+    }
 }

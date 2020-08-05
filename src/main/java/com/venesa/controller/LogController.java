@@ -2,7 +2,6 @@ package com.venesa.controller;
 
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.ResponseData;
-import com.venesa.repository.LogRepository;
 import com.venesa.service.LogService;
 import com.venesa.utils.ConstantsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/log")
 public class LogController {
 
-    @Autowired
-    private LogService logService;
+    private final LogService logService;
+    private final WrapperResponseData wrapperResponse;
 
     @Autowired
-    private WrapperResponseData wrapperResponse;
+    public LogController(LogService logService, WrapperResponseData wrapperResponse) {
+        this.logService = logService;
+        this.wrapperResponse = wrapperResponse;
+    }
 
     @GetMapping
     public ResponseEntity<?> getAll() {

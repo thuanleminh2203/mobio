@@ -34,8 +34,12 @@ public class ValidatorUtils {
             error.rejectValue(nameField, null, nameField + " is not format");
     }
 
+    public static void checkDate(int data, Errors error, String nameField) {
+        if (data > 3 || data <= 0)
+            error.rejectValue(nameField, null, nameField + " is not format");
+    }
+
     public static void checkRegex(String data, Errors error, String nameField, String regex) {
-//		Pattern.compile(regex).matcher(data).matches()
         if (!data.matches(regex)) {
             error.rejectValue(nameField, null, nameField + " is not format");
         }
