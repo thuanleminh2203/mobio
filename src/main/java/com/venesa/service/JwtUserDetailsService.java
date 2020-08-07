@@ -21,15 +21,10 @@ import com.venesa.repository.UserRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService{
-	private final UserRepository userRepository;
-
-	private final PasswordEncoder bcryptEncoder;
-
 	@Autowired
-	public JwtUserDetailsService(UserRepository userRepository, PasswordEncoder bcryptEncoder) {
-		this.userRepository = userRepository;
-		this.bcryptEncoder = bcryptEncoder;
-	}
+	private  UserRepository userRepository;
+	@Autowired
+	private  PasswordEncoder bcryptEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
