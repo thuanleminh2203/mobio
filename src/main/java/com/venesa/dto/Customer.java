@@ -1,59 +1,64 @@
 package com.venesa.dto;
 
-import java.util.Date;
-
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import com.venesa.utils.ConstantsUtil;
+import com.venesa.utils.FieldDTOConstant;
 import com.venesa.utils.ValidatorUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 //@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Customer implements Validator{
+public class Customer implements Validator {
 
-	private String mobileId;
+    private String mobileId;
 
-	private String fullName;
+    private String fullName;
 
-	private String mobile;
+    private String mobile;
 
-	private String idCardNo;
+    private String idCardNo;
 
-	private Integer gender;
+    private Integer gender;
 
-	private Date birthday;
+    private Date birthday;
 
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return Customer.class.equals(clazz);
-	}
+    private String email;
 
-	@Override
-	public void validate(Object target, Errors errors) {
+    private String provinceCode;
 
-		Customer customer = (Customer) target;
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return Customer.class.equals(clazz);
+    }
 
-		ValidatorUtils.checkNullOrEmpty(customer.getMobileId(), errors, "mobileId");
+    @Override
+    public void validate(Object target, Errors errors) {
 
-		ValidatorUtils.checkNullOrEmpty(customer.getFullName(), errors, "fullName");
+        Customer customer = (Customer) target;
 
-		ValidatorUtils.checkNullOrEmpty(customer.getMobile(), errors, "mobile");
-		ValidatorUtils.checkRegex(customer.getMobile(), errors, "mobile", ConstantsUtil.REGEX_NUMBER_PHONE);
+        ValidatorUtils.checkLength(customer.getMobileId(), errors, FieldDTOConstant.MAX_MOBILE_ID,"mobileId");
 
-		ValidatorUtils.checkNullOrEmpty(customer.getIdCardNo(), errors, "idCardNo");
+        ValidatorUtils.checkLength(customer.getFullName(), errors, FieldDTOConstant.MAX_FULLNAME ,"fullName");
 
-		ValidatorUtils.checkNullOrEmpty(customer.getGender().toString(), errors, "gender");
-		ValidatorUtils.checkGender(customer.getGender(), errors, "gender");
+        ValidatorUtils.checkLength(customer.getMobile(), errors,FieldDTOConstant.MAX_MOBILE, "mobile");
+        ValidatorUtils.checkRegex(customer.getMobile(), errors, "mobile", ConstantsUtil.REGEX_NUMBER_PHONE);
 
-	}
+        ValidatorUtils.checkLength(customer.getIdCardNo(), errors, FieldDTOConstant.MAX_ID_CARD_NO, "idCardNo");
+
+        ValidatorUtils.checkLength(customer.getGender().toString(), errors, FieldDTOConstant.MAX_GENDER , "gender");
+        ValidatorUtils.checkGender(customer.getGender(), errors, "gender");
+
+        ValidatorUtils.checkLength(customer.getProvinceCode(), errors,FieldDTOConstant.MAX_PROVINCE_CODE, "provinceCode");
+
+    }
 
 }

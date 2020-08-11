@@ -1,6 +1,5 @@
-package com.venesa.security;
+package com.venesa.component;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Date;
 
@@ -25,6 +24,7 @@ import com.venesa.entity.LogEntity;
 import com.venesa.service.JwtUserDetailsService;
 import com.venesa.service.LogService;
 import com.venesa.utils.ConstantsUtil;
+import com.venesa.utils.JwtTokenUtil;
 
 //import com.eureka.zuul.service.JwtUserDetailsService;
 
@@ -33,18 +33,20 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-	private static Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
+
+	private final JwtUserDetailsService jwtUserDetailsService;
+
+	private final JwtTokenUtil jwtTokenUtil;
+
+	private final LogService logService;
 
 	@Autowired
-	private JwtUserDetailsService jwtUserDetailsService;
-
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
-
-	@Autowired
-	private LogService logService;
-
-	BufferedReader bufferedReader = null;
+	public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil, LogService logService) {
+		this.jwtUserDetailsService = jwtUserDetailsService;
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.logService = logService;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -70,9 +72,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			} catch (Exception e) {
 				System.out.println("=== err token === :" + e.getMessage());
 			}
-		} else {
-			logger.warn("JWT Token does not begin with Bearer String");
-		}
+		} else logger.warn("JWT Token does not begin with Bearer String");
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
@@ -88,21 +88,32 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
 		ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(
 				(HttpServletResponse) response);
+		LogEntity logEntity = new LogEntity();
+		logEntity.setRequestTime(new Date());
 		filterChain.doFilter(requestWrapper, responseWrapper);
 		String requestBody = new String(requestWrapper.getContentAsByteArray());
+		String[] requestSplit  = requestBody.split("[\\r\\n\\t\\s]+");
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String s : requestSplit) {
+			stringBuilder.append(s);
+		}
 		String responseBody = new String(responseWrapper.getContentAsByteArray());
+//		String[] responseSplit  = responseBody.split("[\\r\\n\\t\\s]+");
+//		StringBuilder responseBuilder = new StringBuilder();
+//		for (String s : responseSplit) {
+//			responseBuilder.append(s);
+//		}
 		// Do not forget this line after reading response content or actual response
 		// will be empty!
 		try {
-			LogEntity logEntity = new LogEntity();
 			logEntity.setMethod(request.getMethod());
 			logEntity.setUrl(request.getRequestURL().toString());
 			logEntity.setUsername(username != null ? username : "unknow");
 			logEntity.setRemoteAddr(remoteAddr);
-			logEntity.setTime(new Date());
+			logEntity.setResponseTime(new Date());
 			logEntity.setTypeErr(ConstantsUtil.OK);
 			logEntity.setUserAgent(request.getHeader("User-Agent"));
-			logEntity.setBody(requestBody);
+			logEntity.setBody(stringBuilder.toString());
 			logEntity.setResponseBody(responseBody);
 			logService.save(logEntity);
 		} catch (Exception e) {
