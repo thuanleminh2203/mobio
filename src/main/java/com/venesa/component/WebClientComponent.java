@@ -41,8 +41,6 @@ public class WebClientComponent {
     public <T, V> T callInternalService(ParameterizedTypeReference<T> type, V body, HttpMethod method, String url,
                                         Class<T> tClass, String token) throws Exception {
         T dto = null;
-//        ResponseData responseData = null;
-//        try {
         ResponseData responseData = webClient.method(method).uri(url)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, token).accept(MediaType.APPLICATION_JSON)
@@ -109,19 +107,4 @@ public class WebClientComponent {
         return dto;
     }
 
-//    private <T,V> T getResponseData(ParameterizedTypeReference<T> type, V body, HttpMethod method, String url,
-//                                         Class<T> tClass, String token){
-////        ResponseData<> responseData = null;
-//        ResponseData responseData = webClient.method(method).uri(url)
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .header(HttpHeaders.AUTHORIZATION, token).accept(MediaType.APPLICATION_JSON)
-//                .body(Mono.just(body), type).retrieve().onStatus(HttpStatus::is4xxClientError, clientResponse -> {
-//                    return Mono.error(new Exception());
-//                }).onStatus(HttpStatus::is5xxServerError, clientResponse -> {
-//                    return Mono.error(new Exception());
-//                }).bodyToMono(ResponseData.class).block();
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        return objectMapper.convertValue(responseData.getData(), tClass);
-////        return dto;
-//    }
 }
