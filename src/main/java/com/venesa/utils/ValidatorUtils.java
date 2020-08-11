@@ -45,4 +45,11 @@ public class ValidatorUtils {
         }
     }
 
+    public static void checkRangeNumber(Long data, Errors error, String nameField, int min, int max) {
+         if (checkNullOrEmpty(data.toString(), error, nameField)) return;
+            if(data > max || data < min)
+            error.rejectValue(nameField, null, nameField + " must be greater than" +  min + " and less than "+ max);
+    }
+
+
 }

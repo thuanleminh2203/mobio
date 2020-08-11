@@ -8,6 +8,7 @@ import com.venesa.dto.UserDTO;
 import com.venesa.publisher.service.RabbitMQSender;
 import com.venesa.request.CustomerRequest;
 import com.venesa.utils.ConstantsUtil;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/customer")
-public class CustomerController {
+@AllArgsConstructor
+public class MobioCustomerController {
 	private final WrapperResponseData wrapperResponse;
 
 	private final RabbitMQSender sender;
 
 	private final ObjectMapper objectMapper;
-
-	@Autowired
-	public CustomerController(ObjectMapper objectMapper, WrapperResponseData wrapperResponse, RabbitMQSender sender) {
-		this.objectMapper = objectMapper;
-		this.wrapperResponse = wrapperResponse;
-		this.sender = sender;
-	}
 
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Customer customer, BindingResult result) {

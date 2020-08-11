@@ -3,6 +3,7 @@ package com.venesa.security;
 import com.venesa.component.CustomAccessDeniedHandler;
 import com.venesa.component.JwtAuthenticationEntryPoint;
 import com.venesa.component.JwtRequestFilter;
+import com.venesa.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,21 +23,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final UserDetailsService jwtUserDetailsService;
-    private final JwtRequestFilter jwtRequestFilter;
-    private final CustomAccessDeniedHandler customAccessDeniedHandler;
-
-    public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, UserDetailsService jwtUserDetailsService, JwtRequestFilter jwtRequestFilter, CustomAccessDeniedHandler customAccessDeniedHandler) {
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtUserDetailsService = jwtUserDetailsService;
-        this.jwtRequestFilter = jwtRequestFilter;
-        this.customAccessDeniedHandler = customAccessDeniedHandler;
-    }
+    @Autowired
+    private  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private JwtUserDetailsService jwtUserDetailsService;
+    @Autowired
+    private  JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private  CustomAccessDeniedHandler customAccessDeniedHandler;
 
 //	@Autowired
 //	private IPAuthenticationProvider ipAuthenticationProvider;
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
