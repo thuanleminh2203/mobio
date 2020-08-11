@@ -5,7 +5,7 @@ jwt:
 venesa:
   rabbitmq:
       exchange: exchange
-      queue: queue  
+      queue: queue
       routingkey: routingkey
 
 spring:
@@ -13,7 +13,7 @@ spring:
     name : zuul-server
   main:
     allow-bean-definition-overriding: true
-  datasource: 
+  datasource:
     url : jdbc:mysql://192.168.1.196:3306/venesa_gateway
     username : gateway
     password : Abcd@1234
@@ -21,7 +21,7 @@ spring:
     driver-class-name : com.mysql.cj.jdbc.Driver
   jpa:
     show-sql : false
-    hibernate: 
+    hibernate:
       ddl-auto : none
       naming:
         physical-strategy : org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

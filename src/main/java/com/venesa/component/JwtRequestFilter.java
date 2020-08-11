@@ -34,19 +34,12 @@ import io.jsonwebtoken.ExpiredJwtException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
-
-	private final JwtUserDetailsService jwtUserDetailsService;
-
-	private final JwtTokenUtil jwtTokenUtil;
-
-	private final LogService logService;
-
 	@Autowired
-	public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil, LogService logService) {
-		this.jwtUserDetailsService = jwtUserDetailsService;
-		this.jwtTokenUtil = jwtTokenUtil;
-		this.logService = logService;
-	}
+	private  JwtUserDetailsService jwtUserDetailsService;
+	@Autowired
+	private  JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private  LogService logService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
