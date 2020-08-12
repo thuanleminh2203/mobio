@@ -35,8 +35,8 @@ public class MobioBookingController {
                     HttpStatus.BAD_REQUEST);
         }
         try {
-            MobioResponse response = webClientComponent.callOutterService(new ParameterizedTypeReference<MobioResponse>() {
-            }, rq, HttpMethod.POST, url, MobioResponse.class, null);
+            BookingBase response = webClientComponent.callOuterService(new ParameterizedTypeReference<BookingBase>() {
+            }, rq, HttpMethod.POST, url, BookingBase.class);
 
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
         } catch (Exception e) {
@@ -56,8 +56,8 @@ public class MobioBookingController {
                     HttpStatus.BAD_REQUEST);
         }
         try {
-            MobioResponse response = webClientComponent.callOutterService(new ParameterizedTypeReference<MobioResponse>() {
-            }, rq, HttpMethod.POST, url, MobioResponse.class, null);
+            MobioResponse response = webClientComponent.callOuterService(new ParameterizedTypeReference<MobioResponse>() {
+            }, rq, HttpMethod.POST, url, MobioResponse.class);
 
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
         } catch (Exception e) {

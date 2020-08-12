@@ -1,11 +1,13 @@
 package com.venesa.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.venesa.common.DTO.MobioResponse;
+import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.dto.ResponseData;
 import com.venesa.entity.LogEntity;
 import com.venesa.service.LogService;
 import com.venesa.utils.ConstantsUtil;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,15 +17,28 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 
 @Component
-@AllArgsConstructor
+//@AllArgsConstructor
 public class WebClientComponent {
 
-    private final LogService logService;
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private WebClient webClient;
+    @Autowired
+    private EnvironmentConfig environmentConfig;
 
-    private final WebClient webClient;
+    private String token = "";
+    private String xMerchantId = "";
+
+    @PostConstruct
+    public void initToken() {
+        this.token = environmentConfig.getMobioToken();
+        this.xMerchantId = environmentConfig.getXMerchantId();
+    }
 
 
     /**
@@ -66,19 +81,18 @@ public class WebClientComponent {
     /**
      * webclient for call outside service
      *
-     * @param type
-     * @param body
+     * @param type   body pass
+     * @param body   data pass
      * @param method
      * @param url
-     * @param tClass
-     * @param token
+     * @param tClass return type
      * @param <T>
      * @param <V>
      * @return
      * @throws Exception
      */
-    public <T, V> T callOutterService(ParameterizedTypeReference<T> type, V body, HttpMethod method, String url,
-                                      Class<T> tClass, String token) throws Exception {
+    public <T, V> T callOuterService(ParameterizedTypeReference<?> type, V body, HttpMethod method, String url,
+                                     Class<T> tClass) throws Exception {
         LogEntity logEntity = new LogEntity();
         logEntity.setRequestTime(new Date());
         logEntity.setMethod(method.name());
@@ -87,21 +101,25 @@ public class WebClientComponent {
         logEntity.setType(ConstantsUtil.CALL_API_TO_MOBIO);
         T dto = null;
 //        ResponseData responseData = null;
-        ResponseData responseData = webClient.method(method).uri(url)
+        MobioResponse<?> responseData = webClient.method(method).uri(url)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, token).accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, this.token)
+                .header("X-Merchant-Id", this.xMerchantId)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.justOrEmpty(body), type)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, clientResponse ->
-                        clientResponse.bodyToMono(ResponseData.class).flatMap(response ->
-                                Mono.error(new Exception(response.getErrorMessage()))
+                        clientResponse.bodyToMono(MobioResponse.class).flatMap(response ->
+                                Mono.error(new Exception("Mobio have errs"))
                         )
                 )
                 .onStatus(HttpStatus::is5xxServerError, clientResponse ->
-                        clientResponse.bodyToMono(ResponseData.class).flatMap(response ->
-                                Mono.error(new Exception(response.getErrorMessage()))
+                        clientResponse.bodyToMono(MobioResponse.class).flatMap(response ->
+                                Mono.error(new Exception("Mobio have errs"))
                         ))
-                .bodyToMono(ResponseData.class).block();
+                .bodyToMono(MobioResponse.class).block();
         ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("=====response======" + responseData.getData());
         dto = objectMapper.convertValue(responseData.getData(), tClass);
         logEntity.setResponseBody(dto.toString());
         return dto;
