@@ -27,4 +27,13 @@ public class ConstantsUtil {
 
     public static final int CALL_API_TO_CRM = 1;
 
+    enum StatusContract {
+        TREATTING(1), DONE(2), CAST_PAYMENT_REQUIRED(3), EXPIRED(4), TRANSFER(5), RETURNED(6), RESERVED(7);
+
+        private int value;
+
+        StatusContract(int value) {
+            this.value = value;
+        }
+    }
 }
