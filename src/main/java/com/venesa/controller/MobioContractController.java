@@ -1,13 +1,13 @@
 package com.venesa.controller;
 
-import com.venesa.common.DTO.MobioResponse;
+import com.venesa.common.DTO.ContractUpdateRes;
+import com.venesa.common.DTO.ListContractCreateRes;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.ResponseData;
-import com.venesa.request.BookingBase;
 import com.venesa.request.ContractBase;
-import com.venesa.request.ContractDTO;
+import com.venesa.request.ListContractRq;
 import com.venesa.utils.ConstantsUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -30,17 +30,17 @@ public class MobioContractController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ContractBase rq, BindingResult result) {
         String url = environmentConfig.getSourceContract(HttpMethod.PUT);
-
+        rq.validate(rq, result);
         if (result.hasErrors()) {
             return wrapperResponse.error(
                     new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
                     HttpStatus.BAD_REQUEST);
         }
         try {
-//            MobioResponse response = webClientComponent.callOutterService(new ParameterizedTypeReference<ContractBase>() {
-//            }, rq, HttpMethod.POST, url, MobioResponse.class, null);
+            ContractUpdateRes response = webClientComponent.callOuterService(new ParameterizedTypeReference<ContractBase>() {
+            }, rq, HttpMethod.PUT, url, ContractUpdateRes.class);
 
-            return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, rq));
+            return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
         } catch (Exception e) {
             return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, e.getMessage(), null), HttpStatus.BAD_REQUEST);
         }
@@ -49,23 +49,21 @@ public class MobioContractController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ContractDTO rq, BindingResult result) {
+    public ResponseEntity<?> create(@RequestBody ListContractRq rq, BindingResult result) {
         String url = environmentConfig.getSourceContract(HttpMethod.POST);
-
         if (result.hasErrors()) {
             return wrapperResponse.error(
                     new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
                     HttpStatus.BAD_REQUEST);
         }
         try {
-            MobioResponse response = webClientComponent.callOutterService(new ParameterizedTypeReference<MobioResponse>() {
-            }, rq, HttpMethod.POST, url, MobioResponse.class, null);
+            ListContractCreateRes response = webClientComponent.callOuterService(new ParameterizedTypeReference<ListContractRq>() {
+            }, rq, HttpMethod.POST, url, ListContractCreateRes.class);
+
 
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
         } catch (Exception e) {
-            return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+            return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, e.getCause().getMessage(), null), HttpStatus.BAD_REQUEST);
         }
-
-
     }
 }

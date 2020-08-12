@@ -1,5 +1,7 @@
 package com.venesa.request;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.venesa.dto.Customer;
 import com.venesa.utils.ConstantsUtil;
 import com.venesa.utils.ValidatorUtils;
@@ -12,6 +14,7 @@ import org.springframework.validation.Validator;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CustomerRequest implements Validator {
     private String mobileId;
     private String mobile;
