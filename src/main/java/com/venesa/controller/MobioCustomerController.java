@@ -1,11 +1,11 @@
 package com.venesa.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.venesa.common.DTO.ResponseData;
 import com.venesa.common.DTO.mobio.request.CustomerRequest;
 import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.Customer;
-import com.venesa.dto.ResponseData;
 import com.venesa.dto.UserDTO;
 import com.venesa.publisher.service.RabbitMQSender;
 import lombok.AllArgsConstructor;

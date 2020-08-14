@@ -1,6 +1,7 @@
 package com.venesa.service;
 
 import com.venesa.common.DTO.MessageDTO;
+import com.venesa.common.DTO.ResponseData;
 import com.venesa.common.DTO.mobio.request.BookingBase;
 import com.venesa.common.DTO.mobio.request.BookingDTO;
 import com.venesa.common.DTO.mobio.request.ContractBase;
@@ -10,7 +11,6 @@ import com.venesa.common.DTO.mobio.response.ListContractCreateRes;
 import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.component.WebClientComponent;
-import com.venesa.dto.ResponseData;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.core.ParameterizedTypeReference;

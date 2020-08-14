@@ -1,10 +1,10 @@
 package com.venesa.controller;
 
+import com.venesa.common.DTO.ResponseData;
 import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.RateServiceDTO;
-import com.venesa.dto.ResponseData;
 import com.venesa.publisher.service.RabbitMQSender;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

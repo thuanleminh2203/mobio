@@ -1,5 +1,6 @@
 package com.venesa.controller;
 //
+import com.venesa.common.DTO.ResponseData;
 import com.venesa.common.DTO.mobio.request.BookingBase;
 import com.venesa.common.DTO.mobio.request.BookingDTO;
 import com.venesa.common.DTO.mobio.response.MobioResponse;
@@ -7,7 +8,6 @@ import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
-import com.venesa.dto.ResponseData;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
