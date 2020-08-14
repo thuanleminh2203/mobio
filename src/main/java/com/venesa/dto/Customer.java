@@ -1,8 +1,8 @@
 package com.venesa.dto;
 
-import com.venesa.utils.ConstantsUtil;
+import com.venesa.common.Utils.ConstantsUtil;
+import com.venesa.common.Utils.ValidatorUtils;
 import com.venesa.utils.FieldDTOConstant;
-import com.venesa.utils.ValidatorUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

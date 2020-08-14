@@ -1,14 +1,14 @@
 package com.venesa.controller;
 
-import com.venesa.common.DTO.ContractUpdateRes;
-import com.venesa.common.DTO.ListContractCreateRes;
+import com.venesa.common.DTO.ResponseData;
+import com.venesa.common.DTO.mobio.request.ContractBase;
+import com.venesa.common.DTO.mobio.request.ListContractRq;
+import com.venesa.common.DTO.mobio.response.ContractUpdateRes;
+import com.venesa.common.DTO.mobio.response.ListContractCreateRes;
+import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
-import com.venesa.dto.ResponseData;
-import com.venesa.request.ContractBase;
-import com.venesa.request.ListContractRq;
-import com.venesa.utils.ConstantsUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -29,7 +29,7 @@ public class MobioContractController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ContractBase rq, BindingResult result) {
-        String url = environmentConfig.getSourceContract(HttpMethod.PUT);
+        String url = environmentConfig.getSourceContract();
         rq.validate(rq, result);
         if (result.hasErrors()) {
             return wrapperResponse.error(
@@ -50,7 +50,7 @@ public class MobioContractController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ListContractRq rq, BindingResult result) {
-        String url = environmentConfig.getSourceContract(HttpMethod.POST);
+        String url = environmentConfig.getSourceContract();
         if (result.hasErrors()) {
             return wrapperResponse.error(
                     new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),

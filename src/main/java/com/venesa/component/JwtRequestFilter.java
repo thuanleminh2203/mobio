@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.venesa.common.Utils.ConstantsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import com.venesa.entity.LogEntity;
 import com.venesa.service.JwtUserDetailsService;
 import com.venesa.service.LogService;
-import com.venesa.utils.ConstantsUtil;
 import com.venesa.utils.JwtTokenUtil;
 
 //import com.eureka.zuul.service.JwtUserDetailsService;

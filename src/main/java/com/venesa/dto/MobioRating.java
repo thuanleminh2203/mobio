@@ -1,6 +1,6 @@
 package com.venesa.dto;
 
-import com.venesa.utils.ValidatorUtils;
+import com.venesa.common.Utils.ValidatorUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
