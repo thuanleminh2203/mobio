@@ -1,13 +1,13 @@
 package com.venesa.controller;
-
-import com.venesa.common.DTO.MobioResponse;
+//
+import com.venesa.common.DTO.mobio.MobioResponse;
+import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.ResponseData;
-import com.venesa.request.BookingBase;
-import com.venesa.request.BookingDTO;
-import com.venesa.utils.ConstantsUtil;
+import com.venesa.request.crm.base.BookingBase;
+import com.venesa.request.crm.dto.BookingDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -27,7 +27,7 @@ public class MobioBookingController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody BookingBase rq, BindingResult result) {
-        String url = environmentConfig.getSourceBooking(HttpMethod.POST);
+        String url = environmentConfig.getSourceBooking();
 
         if (result.hasErrors()) {
             return wrapperResponse.error(
@@ -48,7 +48,7 @@ public class MobioBookingController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody BookingDTO rq, BindingResult result) {
-        String url = environmentConfig.getSourceBooking(HttpMethod.PUT);
+        String url = environmentConfig.getSourceBooking();
 
         if (result.hasErrors()) {
             return wrapperResponse.error(

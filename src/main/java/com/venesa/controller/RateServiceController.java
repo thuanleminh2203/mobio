@@ -1,11 +1,11 @@
 package com.venesa.controller;
 
+import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.Customer;
 import com.venesa.dto.MobioRating;
 import com.venesa.dto.ResponseData;
-import com.venesa.utils.ConstantsUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

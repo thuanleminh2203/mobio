@@ -1,7 +1,8 @@
-package com.venesa.request;
+package com.venesa.request.crm.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.venesa.request.crm.base.ContractBase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

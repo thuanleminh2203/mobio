@@ -1,15 +1,14 @@
 package com.venesa.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.Customer;
 import com.venesa.dto.ResponseData;
 import com.venesa.dto.UserDTO;
 import com.venesa.publisher.service.RabbitMQSender;
 import com.venesa.request.CustomerRequest;
-import com.venesa.utils.ConstantsUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

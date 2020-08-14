@@ -2,9 +2,8 @@ package com.venesa.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.venesa.dto.Customer;
-import com.venesa.utils.ConstantsUtil;
-import com.venesa.utils.ValidatorUtils;
+import com.venesa.common.Utils.ConstantsUtil;
+import com.venesa.common.Utils.ValidatorUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

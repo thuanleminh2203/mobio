@@ -1,12 +1,12 @@
 package com.venesa.controller;
 
+import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.RateServiceDTO;
 import com.venesa.dto.ResponseData;
-import com.venesa.utils.ConstantsUtil;
+import com.venesa.publisher.service.RabbitMQSender;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class HelloController {
     private final WrapperResponseData wrapperResponse;
-
     private final WebClientComponent webClient;
 
+    RabbitMQSender rabbitMQSender ;
 //    @Autowired
 //    public HelloController(WrapperResponseData wrapperResponse, WebClientComponent webClient) {
 //        this.wrapperResponse = wrapperResponse;

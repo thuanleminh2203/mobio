@@ -1,4 +1,4 @@
-package com.venesa.request;
+package com.venesa.request.crm.base;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;

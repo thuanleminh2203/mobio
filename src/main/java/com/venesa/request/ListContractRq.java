@@ -1,5 +1,6 @@
 package com.venesa.request;
 
+import com.venesa.request.crm.dto.ContractDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -30,14 +30,14 @@ spring:
       port: 5672
       username: guest
       password: guest
-#      listener:
-#        simple:
-#         retry:
-#           enabled: true
-#           initial-interval: 3s
-#           max-attempts: 6
-#           max-interval: 10s
-#           multiplier: 2
+      listener:
+        simple:
+         retry:
+             enabled: true
+             initial-interval: 3s #The message should be retried after an interval of 3s.
+             max-attempts: 5 #The message should be retried maximum of 5 times
+             max-interval: 10s #The maximum time interval between two retries should never exceed 10s
+             multiplier: 2
 
 #eureka:
 #   client:

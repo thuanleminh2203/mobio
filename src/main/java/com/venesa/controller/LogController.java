@@ -1,9 +1,9 @@
 package com.venesa.controller;
 
+import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.ResponseData;
 import com.venesa.service.LogService;
-import com.venesa.utils.ConstantsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
