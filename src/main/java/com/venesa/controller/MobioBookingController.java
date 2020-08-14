@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-@RequestMapping("/mobio/booking/")
+@RequestMapping(ConstantsUtil.URL_GATEWAY+"booking")
 public class MobioBookingController {
     private final WrapperResponseData wrapperResponse;
     private final WebClientComponent webClientComponent;
