@@ -1,14 +1,14 @@
 package com.venesa.controller;
 
-import com.venesa.common.DTO.mobio.ContractUpdateRes;
-import com.venesa.common.DTO.mobio.ListContractCreateRes;
+import com.venesa.common.DTO.mobio.request.ContractBase;
+import com.venesa.common.DTO.mobio.request.ListContractRq;
+import com.venesa.common.DTO.mobio.response.ContractUpdateRes;
+import com.venesa.common.DTO.mobio.response.ListContractCreateRes;
 import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.ResponseData;
-import com.venesa.request.crm.base.ContractBase;
-import com.venesa.request.ListContractRq;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

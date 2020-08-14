@@ -1,12 +1,11 @@
 package com.venesa.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.venesa.common.DTO.mobio.MobioResponse;
+import com.venesa.common.DTO.mobio.response.MobioResponse;
 import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.common.config.EnvironmentConfig;
 import com.venesa.dto.ResponseData;
 import com.venesa.entity.LogEntity;
-import com.venesa.exception.ExceptionCustom;
 import com.venesa.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
