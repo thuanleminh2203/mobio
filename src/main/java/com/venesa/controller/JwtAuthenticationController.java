@@ -1,9 +1,9 @@
 package com.venesa.controller;
 
+import com.venesa.common.DTO.ResponseData;
 import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.JwtResponse;
-import com.venesa.dto.ResponseData;
 import com.venesa.dto.UserDTO;
 import com.venesa.service.JwtUserDetailsService;
 import com.venesa.utils.JwtTokenUtil;
