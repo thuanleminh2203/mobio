@@ -5,7 +5,6 @@ import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WebClientComponent;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.RateServiceDTO;
-import com.venesa.publisher.service.RabbitMQSender;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -25,7 +24,6 @@ public class HelloController {
     private final WrapperResponseData wrapperResponse;
     private final WebClientComponent webClient;
 
-    RabbitMQSender rabbitMQSender ;
 //    @Autowired
 //    public HelloController(WrapperResponseData wrapperResponse, WebClientComponent webClient) {
 //        this.wrapperResponse = wrapperResponse;

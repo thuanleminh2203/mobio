@@ -7,7 +7,6 @@ import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.Customer;
 import com.venesa.dto.UserDTO;
-import com.venesa.publisher.service.RabbitMQSender;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/customer")
+@RequestMapping(ConstantsUtil.URL_GATEWAY+"customer")
 @AllArgsConstructor
 public class MobioCustomerController {
 	private final WrapperResponseData wrapperResponse;
 
-	private final RabbitMQSender sender;
 
 	private final ObjectMapper objectMapper;
 
@@ -55,7 +53,6 @@ public class MobioCustomerController {
 	
 	@GetMapping
 	public ResponseEntity<?> get() {
-		sender.sender(new UserDTO("thuanpro123","123456"), "exchange" , "key_common");
 		Customer customer = new Customer();
 		customer.setFullName("heidi");
 		customer.setGender(1);
