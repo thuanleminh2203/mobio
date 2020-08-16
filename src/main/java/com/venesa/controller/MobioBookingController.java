@@ -1,5 +1,6 @@
 package com.venesa.controller;
 //
+
 import com.venesa.common.DTO.ResponseData;
 import com.venesa.common.DTO.mobio.request.BookingBase;
 import com.venesa.common.DTO.mobio.request.BookingDTO;
@@ -19,16 +20,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-@RequestMapping(ConstantsUtil.URL_GATEWAY+"booking")
+//@RequestMapping(ConstantsUtil.URL_GATEWAY+"booking")
+@RequestMapping("/mobio")
 public class MobioBookingController {
     private final WrapperResponseData wrapperResponse;
     private final WebClientComponent webClientComponent;
     private final EnvironmentConfig environmentConfig;
 
-    @PutMapping
+    @PutMapping("/updateAppointment")
     public ResponseEntity<?> update(@RequestBody BookingBase rq, BindingResult result) {
-        String url = environmentConfig.getSourceBooking();
-
+        String url = environmentConfig.getSourceUpdateBooking();
+        System.out.println("ID = " + rq.getBookingCode());
+        System.out.println("APP_TIME = " + rq.getAppointmentTime());
+        System.out.println("CA HEN = " + rq.getWorkShiftId());
         if (result.hasErrors()) {
             return wrapperResponse.error(
                     new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
@@ -36,7 +40,7 @@ public class MobioBookingController {
         }
         try {
             BookingBase response = webClientComponent.callOuterService(new ParameterizedTypeReference<BookingBase>() {
-            }, rq, HttpMethod.POST, url, BookingBase.class);
+            }, rq, HttpMethod.PUT, url, BookingBase.class);
 
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
         } catch (Exception e) {
