@@ -60,7 +60,7 @@ public class HelloController {
                     "IjpudWxsLFwiZ3JvdXBDb2RlXCI6XCJcIixcImFnZW50RXh0XCI6XCJcIixcInRyYWNraW5nTG9nXCI6dHJ1ZX0ifQ.emx2kJHUdEzBzaWKyG" +
                     "vQ8_TV0uHTa02OYw_EIgz1VJ4";
             RateServiceDTO res = webClient.callInternalService(new ParameterizedTypeReference<RateServiceDTO>() {
-            }, rq, HttpMethod.POST, "http://10.33.68.19:8888/api-catalog/api/v1.0/staffs/branch/14", RateServiceDTO.class, token1);
+            }, rq, HttpMethod.POST, "http://10.33.68.19:8888/api-catalog/api/v1.0/staffs/branch/14", RateServiceDTO.class);
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, res));
         } catch (Exception e) {
             return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, ConstantsUtil.ERR_BUSINESS, null),
