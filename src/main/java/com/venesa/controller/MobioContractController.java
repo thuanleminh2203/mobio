@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-@RequestMapping(ConstantsUtil.URL_GATEWAY+"contract/")
+@RequestMapping(ConstantsUtil.URL_GATEWAY+"contract")
 public class MobioContractController {
 
     private final WrapperResponseData wrapperResponse;

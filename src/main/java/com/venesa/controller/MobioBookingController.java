@@ -37,8 +37,8 @@ public class MobioBookingController {
                     HttpStatus.BAD_REQUEST);
         }
         try {
-            BookingBase response = webClientComponent.callInternalService(new ParameterizedTypeReference<BookingBase>() {
-            }, rq, HttpMethod.PUT, url, BookingBase.class);
+            CRMBookingUpdateRes response = webClientComponent.callInternalService(new ParameterizedTypeReference<CRMBookingBase>() {
+            }, rq, HttpMethod.PUT, url, CRMBookingUpdateRes.class);
             CRMBookingUpdateRes bookingUpdateRes = new CRMBookingUpdateRes(response.getBookingCode());
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, bookingUpdateRes));
         } catch (Exception e) {
@@ -46,22 +46,4 @@ public class MobioBookingController {
         }
     }
 
-//    @PostMapping
-//    public ResponseEntity<?> create(@RequestBody BookingDTO rq, BindingResult result) {
-//        String url = environmentConfig.getSourceBooking();
-//
-//        if (result.hasErrors()) {
-//            return wrapperResponse.error(
-//                    new ResponseData<>(ConstantsUtil.ERROR, result.getFieldError().getDefaultMessage(), null),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//        try {
-//            MobioResponse response = webClientComponent.callOuterService(new ParameterizedTypeReference<MobioResponse>() {
-//            }, rq, HttpMethod.POST, url, MobioResponse.class);
-//
-//            return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
-//        } catch (Exception e) {
-//            return wrapperResponse.error(new ResponseData<>(ConstantsUtil.ERROR, e.getMessage(), null), HttpStatus.BAD_REQUEST);
-//        }
-//    }
 }
