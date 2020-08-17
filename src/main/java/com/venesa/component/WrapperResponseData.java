@@ -14,6 +14,5 @@ public class WrapperResponseData {
 	public <T> ResponseEntity<T> error(T body, HttpStatus status){
 		return new ResponseEntity<>(body, status);
 	}
-	
-	
+
 }
