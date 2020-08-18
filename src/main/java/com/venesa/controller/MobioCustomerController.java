@@ -7,6 +7,8 @@ import com.venesa.common.Utils.ConstantsUtil;
 import com.venesa.component.WrapperResponseData;
 import com.venesa.dto.Customer;
 import com.venesa.dto.UserDTO;
+import com.venesa.publisher.sender.RabbitMQSender;
+import com.venesa.service.RabbitMQListener;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class MobioCustomerController {
 
 	private final ObjectMapper objectMapper;
 
+//	private final com.venesa.publisher.sender.RabbitMQSender rabbitMQSender;
+//	com.venesa.publisher.sender.RabbitMQSender
+	RabbitMQSender rabbitMQSender;
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Customer customer, BindingResult result) {
 		customer.validate(customer, result);
