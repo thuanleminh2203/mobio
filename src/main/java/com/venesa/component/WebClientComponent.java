@@ -90,7 +90,7 @@ public class WebClientComponent {
      * @return
      * @throws Exception
      */
-    public <T, V> T callOuterService(ParameterizedTypeReference<?> type, V body, HttpMethod method, String url,
+    public <T, V> void callOuterService(ParameterizedTypeReference<?> type, V body, HttpMethod method, String url,
                                      Class<T> tClass) throws Exception {
         LogEntity logEntity = new LogEntity();
         logEntity.setRequestTime(new Date());
@@ -120,11 +120,12 @@ public class WebClientComponent {
                                     Mono.error(new Exception(response.getMessage()))
                             ))
                     .bodyToMono(MobioResponse.class).block();
-            ObjectMapper objectMapper = new ObjectMapper();
+//            ObjectMapper objectMapper = new ObjectMapper();
             System.out.println("=====response======" + responseData.getData());
-            dto = objectMapper.convertValue(responseData.getData(), tClass);
+//            dto = objectMapper.convertValue(responseData.getData(), tClass);
             logEntity.setResponseBody(dto.toString());
-            return dto;
+            logService.save(logEntity);
+//            return dto;
         }catch (Exception e){
             System.out.println("minhon========="+e.getCause().getMessage());
             throw new Exception(e.getCause().getMessage());

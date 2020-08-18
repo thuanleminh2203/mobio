@@ -37,8 +37,8 @@ public class MobioContractController {
                     HttpStatus.BAD_REQUEST);
         }
         try {
-            ContractUpdateRes response = webClientComponent.callOuterService(new ParameterizedTypeReference<ContractBase>() {
-            }, rq, HttpMethod.PUT, url, ContractUpdateRes.class);
+            ContractBase response = webClientComponent.callInternalService(new ParameterizedTypeReference<ContractBase>() {
+            }, rq, HttpMethod.PUT, url, ContractBase.class);
 
             return wrapperResponse.success(new ResponseData<>(ConstantsUtil.SUCCSESS, ConstantsUtil.SUCCSESS_MESS, response));
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class MobioContractController {
                     HttpStatus.BAD_REQUEST);
         }
         try {
-            ListContractCreateRes response = webClientComponent.callOuterService(new ParameterizedTypeReference<ListContractRq>() {
+            ListContractCreateRes response = webClientComponent.callInternalService(new ParameterizedTypeReference<ListContractRq>() {
             }, rq, HttpMethod.POST, url, ListContractCreateRes.class);
 
 
