@@ -2,10 +2,7 @@ package com.venesa.service;
 
 import com.venesa.common.DTO.MessageDTO;
 import com.venesa.common.DTO.ResponseData;
-import com.venesa.common.DTO.mobio.request.BookingBase;
-import com.venesa.common.DTO.mobio.request.BookingDTO;
-import com.venesa.common.DTO.mobio.request.ContractBase;
-import com.venesa.common.DTO.mobio.request.ContractDTO;
+import com.venesa.common.DTO.mobio.request.*;
 import com.venesa.common.DTO.mobio.response.ContractUpdateRes;
 import com.venesa.common.DTO.mobio.response.ListContractCreateRes;
 import com.venesa.common.Utils.ConstantsUtil;
@@ -18,6 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +38,7 @@ public class RabbitMQListener {
                 case ConstantsUtil.CONTRACT: {
                     String url = env.getSourceContract();
                     if (medthod.matches(String.valueOf(HttpMethod.POST))) {
-                        reference = new ParameterizedTypeReference<ContractDTO>() {
+                        reference = new ParameterizedTypeReference<ListContractRq>() {
                         };
                         tclass = ListContractCreateRes.class;
                     }
@@ -60,13 +58,39 @@ public class RabbitMQListener {
                         tclass = BookingDTO.class;
                     }
                     if (medthod.matches(String.valueOf(HttpMethod.PUT))) {
-                        reference = new ParameterizedTypeReference<BookingBase>() {
+                        reference = new ParameterizedTypeReference<MobioBookingRequest>() {
                         };
                         tclass = BookingBase.class;
                     }
-                    webClientComponent.callOuterService(reference, message.getMessage(), message.getMethod(), url, ResponseData.class);
+                    webClientComponent.callOuterService(reference, message.getMessage(), message.getMethod(), url, tclass);
                     break;
                 }
+                case ConstantsUtil.THERAPY: {
+                    String url = env.getSourceDoneService();
+                    if (medthod.matches(String.valueOf(HttpMethod.POST))) {
+                        reference = new ParameterizedTypeReference<MobioTherapyRq>() {
+                        };
+                        tclass = MobioTherapyRq.class;
+                    }
+                    webClientComponent.callOuterService(reference, message.getMessage(), message.getMethod(), url, tclass);
+                    break;
+                }
+                case ConstantsUtil.CUSTOMER: {
+                    String url = env.getSourceImportCustomers();
+                    if (medthod.matches(String.valueOf(HttpMethod.POST))) {
+                        reference = new ParameterizedTypeReference<MobioListCustomerRq>() {
+                        };
+                        tclass = MobioListCustomerRq.class;
+                    }
+                    if (medthod.matches(String.valueOf(HttpMethod.PUT))) {
+                        reference = new ParameterizedTypeReference<MobioCustomerUpdateRq>() {
+                        };
+                        tclass = MobioListCustomerRq.class;
+                    }
+                    webClientComponent.callOuterService(reference, message.getMessage(), message.getMethod(), url, tclass);
+                    break;
+                }
+
             }
 //        } catch (Exception e) {
 //            System.out.println("======errr=====" + e.getCause().getMessage());
